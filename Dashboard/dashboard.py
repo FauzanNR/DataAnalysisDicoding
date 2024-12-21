@@ -10,7 +10,7 @@ process = Popen(['python','dashboard.py'])
 add_script_run_ctx(process,ctx)
 
 
-st.header('E-Commerce Public Dashboard')
+st.header('E-Commerce Public Data Analysis Dashboard')
 
 
 def data_preparation(df):
