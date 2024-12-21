@@ -5,7 +5,7 @@ from streamlit.runtime.scriptrunner import add_script_run_ctx,get_script_run_ctx
 from subprocess import Popen
 
 ctx = get_script_run_ctx()
-##Some code##
+
 process = Popen(['python','dashboard.py'])
 add_script_run_ctx(process,ctx)
 
@@ -21,7 +21,6 @@ def data_preparation(df):
 # Load data
 all_df = pd.read_csv('./Dashboard/all_data.csv')
 
-# Prepare filtered data
 ready_df = data_preparation(all_df)
 
 # State revenue
@@ -43,7 +42,7 @@ st.pyplot(plt)
 
 
 #Peak Purchasing Time
-st.write("## Peak Purchasing Time")
+st.write("## Peak Purchasing Time (Hourly, Daily, and Quartal)")
 ready_df['order_hour'] = ready_df['order_purchase_timestamp'].dt.hour
 purchase_hour_trend = ready_df.groupby(by='order_hour').size().reset_index(name='order_count_in_hour')
 
