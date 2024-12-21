@@ -6,7 +6,7 @@
     - Streamlit Dashboard code
     - Data
     - Notebook
-    - Streamlit [URL]()
+    - Streamlit [URL](https://fauzan-dicoding-da-dashboard.streamlit.app/)
  ## Dashboard on Local
  - clone the repos
  - install conda env or just use direct python interpeter
