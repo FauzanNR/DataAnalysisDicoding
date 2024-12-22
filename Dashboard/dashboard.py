@@ -13,15 +13,21 @@ import matplotlib.pyplot as plt
 st.header('E-Commerce Public Data Analysis Dashboard')
 
 
-def data_preparation(df):
+def data_preparation(df, start_date, end_date):
     df['order_purchase_timestamp'] = pd.to_datetime(df['order_purchase_timestamp'])
+    start_date = pd.Timestamp(start_date)
+    end_date = pd.Timestamp(end_date)
+    df = df[(df['order_purchase_timestamp'] >= start_date) & (df['order_purchase_timestamp'] <= end_date)]
     return df
 
 
 # Load data
 all_df = pd.read_csv('all_data.csv')
 
-ready_df = data_preparation(all_df)
+start_date = st.date_input("Start Date", value=pd.to_datetime("2016-01-01"))
+end_date = st.date_input("End Date", value=pd.to_datetime("2018-12-31"))
+
+ready_df = data_preparation(all_df, start_date, end_date)
 
 # State revenue
 st.write("## State Revenue")
@@ -114,8 +120,8 @@ st.pyplot(plt)
 #Seller Rank
 st.write("## Seller Rank")
 seller_order_delivered = all_df.loc[(all_df['order_status'] == 'delivered')]
-top_ten_sellers = seller_order_delivered.groupby(by=['seller_id'])['order_id'].count().reset_index().sort_values(by='order_id', ascending=False)
-top_ten_sellers.columns = ['seller_id', 'total_sales']
+top_ten_sellers = seller_order_delivered.groupby(by=['seller_id','seller_city','seller_state'])['order_id'].count().reset_index().sort_values(by='order_id', ascending=False)
+top_ten_sellers.columns = ['seller_id','seller_city','seller_state','total_sales']
 
 plt.figure(figsize=(12,6))
 plt.barh(top_ten_sellers['seller_id'].head(10), top_ten_sellers['total_sales'].head(10), color='skyblue')
@@ -124,3 +130,9 @@ plt.xlabel('Seller ID')
 plt.ylabel('Total Sales')
 plt.gca().invert_yaxis()
 st.pyplot(plt)
+
+#Top ten seller origin
+st.write("## Top Ten Seller City and State")
+top_ten_seller_city = top_ten_sellers[['seller_id','seller_city','seller_state']].head(10).reset_index()
+top_ten_seller_city.index = range(1, len(top_ten_seller_city)+1)
+st.table(top_ten_seller_city)
