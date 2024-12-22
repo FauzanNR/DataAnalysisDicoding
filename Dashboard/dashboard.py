@@ -1,13 +1,13 @@
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
-from streamlit.runtime.scriptrunner import add_script_run_ctx,get_script_run_ctx
-from subprocess import Popen
+# from streamlit.runtime.scriptrunner import add_script_run_ctx,get_script_run_ctx
+# from subprocess import Popen
 
-ctx = get_script_run_ctx()
+# ctx = get_script_run_ctx()
 
-process = Popen(['python','dashboard.py'])
-add_script_run_ctx(process,ctx)
+# process = Popen(['python','dashboard.py'])
+# add_script_run_ctx(process,ctx)
 
 
 st.header('E-Commerce Public Data Analysis Dashboard')
@@ -19,7 +19,7 @@ def data_preparation(df):
 
 
 # Load data
-all_df = pd.read_csv('./Dashboard/all_data.csv')
+all_df = pd.read_csv('all_data.csv')
 
 ready_df = data_preparation(all_df)
 
