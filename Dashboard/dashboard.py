@@ -22,7 +22,7 @@ def data_preparation(df, start_date, end_date):
 
 
 # Load data
-all_df = pd.read_csv('all_data.csv')
+all_df = pd.read_csv('./Dashboard/all_data.csv')
 
 start_date = st.date_input("Start Date", value=pd.to_datetime("2016-01-01"))
 end_date = st.date_input("End Date", value=pd.to_datetime("2018-12-31"))
