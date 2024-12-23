@@ -21,8 +21,14 @@ def data_preparation(df, start_date, end_date):
     return df
 
 
-# Load data
-all_df = pd.read_csv('./Dashboard/all_data.csv')
+# Load the data
+try:
+    all_df = pd.read_csv('./Dashboard/all_data.csv')#path for streamlit cloud
+except FileNotFoundError as e:
+    print(e)
+    print("changing file path")
+    all_df = pd.read_csv('./all_data.csv')#path for local streamlit
+
 
 start_date = st.date_input("Start Date", value=pd.to_datetime("2016-01-01"))
 end_date = st.date_input("End Date", value=pd.to_datetime("2018-12-31"))
@@ -109,8 +115,8 @@ most_purchased_product.columns = ['product_category_name_english', 'total_purcha
 plt.figure(figsize=(12, 6))
 plt.barh(most_purchased_product['product_category_name_english'].head(10), most_purchased_product['total_purchase'].head(10), color='skyblue')
 plt.text(most_purchased_product['total_purchase'].values[0], most_purchased_product['product_category_name_english'].values[0], f"{most_purchased_product['total_purchase'].values[0]}")
-plt.xlabel('product_category_name')
-plt.ylabel('Customer total_purchase')
+plt.ylabel('Product Category Name')
+plt.xlabel('Customer Total Purchase')
 plt.title('Top 10 Purchased Products')
 
 plt.gca().invert_yaxis()
@@ -126,8 +132,8 @@ top_ten_sellers.columns = ['seller_id','seller_city','seller_state','total_sales
 plt.figure(figsize=(12,6))
 plt.barh(top_ten_sellers['seller_id'].head(10), top_ten_sellers['total_sales'].head(10), color='skyblue')
 plt.text(top_ten_sellers['total_sales'].values[0], top_ten_sellers['seller_id'].values[0], f"{top_ten_sellers['total_sales'].values[0]}")
-plt.xlabel('Seller ID')
-plt.ylabel('Total Sales')
+plt.ylabel('Seller ID')
+plt.xlabel('Total Sales')
 plt.gca().invert_yaxis()
 st.pyplot(plt)
 
